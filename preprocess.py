@@ -86,6 +86,7 @@ def load_vocabulary():
 
 def create_feature_vector_test_data():
 	try:
+		filelist = []
 		load_vocabulary()
 		global FEATURE_VECTOR_HANDLER
 		ROOT_DIR = INPUT_FILENAME #directory containing all the files to be pre-processed
@@ -94,7 +95,12 @@ def create_feature_vector_test_data():
 			for name in files:
 				absolute_path = os.path.join(root, name)
 				if os.path.isfile(absolute_path) and name != ".DS_Store":
-					convert_to_feature_vector(None, absolute_path)
+					filelist.append(absolute_path)
+					#convert_to_feature_vector(None, absolute_path)
+		# to make it sorted
+		for f in sorted(filelist):
+			#print(f)
+			convert_to_feature_vector(None,f)
 		FEATURE_VECTOR_HANDLER.close()
 	except:
 		raise
