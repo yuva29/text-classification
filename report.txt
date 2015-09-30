@@ -1,0 +1,138 @@
+NAIVE BAYES CALSSIFIER 
+
+Part I: 75% Train , 25% Development
+
+Sentiment Analysis (POSITIVE/NEGATIVE):
+
+Naive Bayes
+
+	 Reacall	Precision	F-Score
+-------------------------------------------------
+POSITIVE 0.8770		0.8095		0.8419
+-------------------------------------------------
+NEGATIVE 0.8182		0.8830		0.8494
+-------------------------------------------------
+
+SVM
+	 Reacall	Precision	F-Score
+-------------------------------------------------
+POSITIVE 0.8637		0.8855		0.8744
+-------------------------------------------------
+NEGATIVE 0.8789		0.8561		0.8673
+-------------------------------------------------
+
+MegaM
+
+	 Reacall	Precision	F-Score
+-------------------------------------------------
+POSITIVE 0.8902		0.8924		0.8913
+-------------------------------------------------
+NEGATIVE 0.8896		0.8866		0.8878
+-------------------------------------------------
+
+List of scripts:
+
+1. nblearn.py – Creates model by learning training data
+python3 nblearn.py /path/to/input/file path/to/model/file
+
+2. nbclassify.py – Classifies data using the model generated from nblearn.py
+python3 nbclassifyeval /path/to/model/file path/to/test/file
+
+3. nbclassifyeval.py - Classifies data using the model  generated from nblearn.py and it also reports recall, precision and f-score. In order to measure accurate f-score, the test file should have targets labeled appropriately.
+python3 nbclassifyeval /path/to/model/file path/to/test/file
+
+4. preprocess.py – Utility to help with all the required preprocessing tasks
+List of options supported by preprocessing module: -label_sentiment_nb, -label_sentiment_svm, -label_sentiment_megam, -label_email_svm, -label_email_megam, -split_data, -remove_label,  -create_feature_vector, -create_feature_vector_test, -get_first_col, -add_target_svm, -add-target-megam
+
+Below are the details about each action.
+List of scripts:
+1. nblearn.py – Creates model by learning training data
+python3 nblearn.py /path/to/input/file path/to/model/file
+
+2. nbclassify.py – Classifies data using the model generated from nblearn.py
+python3 nbclassifyeval /path/to/model/file path/to/test/file
+
+3. nbclassifyeval.py - Classifies data using the model  generated from nblearn.py and it also reports recall, precision and f-score. In order to measure accurate f-score, the test file should have targets labeled appropriately.
+python3 nbclassifyeval /path/to/model/file path/to/test/file
+
+4. preprocess.py – Utility to help with all the required preprocessing tasks
+List of options supported by preprocessing module: -label_sentiment_nb, -label_sentiment_svm, -label_sentiment_megam, -label_email_svm, -label_email_megam, -split_data, -remove_label,  -create_feature_vector, -create_feature_vector_test, -get_first_col, -add_target_svm, -add-target-megam
+
+Below are the details about each action.
+
+“-split_data” 
+Shuffles and split the data into 75% and 25%. “shuf” shell command is used to split the data. 
+python3 preprocess.py -split_data path/to/input/file 
+
+“-label_sentiment_nb”
+Labels each example as POSITIVE or NEGATIVE based on the values indicated on the first column (>=7 as POSITIVE, <=4 as NEGATIVE).
+python3 preprocess.py -label_sentiment_nb path/to/input/file
+
+“-label_sentiment_svm”, “-label_email_svm”
+Identifies and replaces the target(first) column with +1/-1 to make it work with SVM classifier. Also, it changes feature numbers to 1-indexed rather 0-indexed.
+python3 preprocess.py -label_sentiment_svm path/to/input/file – for sentiment data
+python3 preprocess.py -label_email_svm path/to/input/file – for email data
+
+“-label_sentiment_megam”, “-label_email_megam”
+Identifies and replaces the target(first) column with 1/0 to make it work with MegaM classifier. Also, it changes feature vector (feature:frequency) delimiter “:” to space “ “
+python3 preprocess.py -label_sentiment_megam path/to/input/file – for sentiment data
+python3 preprocess.py -label_email_megam path/to/input/file – for email data
+
+“-remove_label”
+Removes label/target column from the given file
+python3 preprocess.py -remove_label path/to/input/file
+
+“-create_feature_vector”
+Creates feature:frequency vector by iterating through all the files in the given folder and labels them accordingly based on the file's parent folder(e.g HAM/SPAM).
+python3 preprocess.py -create_feature_vector /path/to/input/folder /path/to/output/file(feature vector file) /path/to/vocabulary
+ 
+“-create_feature_vector_test”
+Creates feature:frequency vector by iterating through all the files in the given folder. As it is a test data, not label/target is associated with them.
+python3 preprocess.py -create_feature_vector /path/to/input/folder /path/to/output/file(feature vector file) /path/to/vocabulary
+
+“-get_first_col”
+Returns the first column of given file. Its helpful during F-score calculation.
+python3 preprocess.py -get_first_col path/to/input/file
+
+“-add_target_svm”
+SVM classifier expects target values to report accuracies. As out test data does not contain any targets, this option adds default(+1) target to all the examples to make test data compatible with SVM format. Also, it changes the feature vector to 1-indexed.
+python3 preprocess.py -add_target_svm path/to/input/file
+
+“-add_target_megam”
+MegaM expects target values to report accuracies. As out test data does not contain any targets, this option adds default(1) target to all the examples to make test data compatible with MegaM format. Also, it changes the feature vector to space seperated values.
+python3 preprocess.py -add_target_megam path/to/input/file
+
+5. postprocess.py – Utility to help with all the required postprocessing tasks
+List of options supported : -label_sentiment_svm, -label_sentiment_megam,-label_email_megam, -label_email_svm
+Below are the details for each option
+
+“-label_sentiment_svm”, “- label_sentiment_megam”
+Converts SVM light/ MegaM results to POSITVE/NEGATIVE for each examples
+python3 preprocess.py -label_sentiment_svm path/to/input/file(output file generated from SVM light)
+python3 preprocess.py -label_sentiment_megam path/to/input/file(output file generated from MegaM)
+
+“ -label_email_svm”, “-label_email_megam”
+Converts SVM light/ MegaM results to SPAM/HAM for each examples
+python3 preprocess.py -label_email_svm path/to/input/file(output file generated from SVM light)
+python3 preprocess.py -label_email_megam path/to/input/file(output file generated from MegaM)
+
+6. calculatescore.py – Calculates recall, precision and f-score given actual and predicted results
+python3 postprocess.py path/to/predicted/results path/to/actual/results CLASS1LABEL CLASS2LABEL
+
+5. postprocess.py – Utility to help with all the required postprocessing tasks
+List of options supported : -label_sentiment_svm, -label_sentiment_megam,-label_email_megam, -label_email_svm
+Below are the details for each option
+
+“-label_sentiment_svm”, “- label_sentiment_megam”
+Converts SVM light/ MegaM results to POSITVE/NEGATIVE for each examples
+python3 preprocess.py -label_sentiment_svm path/to/input/file(output file generated from SVM light)
+python3 preprocess.py -label_sentiment_megam path/to/input/file(output file generated from MegaM)
+
+“ -label_email_svm”, “-label_email_megam”
+Converts SVM light/ MegaM results to SPAM/HAM for each examples
+python3 preprocess.py -label_email_svm path/to/input/file(output file generated from SVM light)
+python3 preprocess.py -label_email_megam path/to/input/file(output file generated from MegaM)
+
+6. calculatescore.py – Calculates recall, precision and f-score given actual and predicted results
+python3 postprocess.py path/to/predicted/results path/to/actual/results CLASS1LABEL CLASS2LABEL
+
