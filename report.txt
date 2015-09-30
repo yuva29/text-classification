@@ -130,21 +130,6 @@ Even though the training set is smaller, based on the result all machine learnin
 Is there a difference between SPAM detection and sentiment analysis? Yes, Spam performs extremely better even though the training data has been reducted a lot.
 
 List of scripts:
-
-1. nblearn.py – Creates model by learning training data
-python3 nblearn.py /path/to/input/file path/to/model/file
-
-2. nbclassify.py – Classifies data using the model generated from nblearn.py
-python3 nbclassifyeval /path/to/model/file path/to/test/file
-
-3. nbclassifyeval.py - Classifies data using the model  generated from nblearn.py and it also reports recall, precision and f-score. In order to measure accurate f-score, the test file should have targets labeled appropriately.
-python3 nbclassifyeval /path/to/model/file path/to/test/file
-
-4. preprocess.py – Utility to help with all the required preprocessing tasks
-List of options supported by preprocessing module: -label_sentiment_nb, -label_sentiment_svm, -label_sentiment_megam, -label_email_svm, -label_email_megam, -split_data, -remove_label,  -create_feature_vector, -create_feature_vector_test, -get_first_col, -add_target_svm, -add-target-megam
-
-Below are the details about each action.
-List of scripts:
 1. nblearn.py – Creates model by learning training data
 python3 nblearn.py /path/to/input/file path/to/model/file
 
