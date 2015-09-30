@@ -4,7 +4,6 @@ Part I: 75% Train , 25% Development
 
 Sentiment Analysis (POSITIVE/NEGATIVE):
 Naive Bayes
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
 POSITIVE 0.8770		0.8095		0.8419
@@ -21,7 +20,6 @@ NEGATIVE 0.8789		0.8561		0.8673
 -------------------------------------------------
 
 MegaM
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
 POSITIVE 0.8902		0.8924		0.8913
@@ -29,9 +27,14 @@ POSITIVE 0.8902		0.8924		0.8913
 NEGATIVE 0.8896		0.8866		0.8878
 -------------------------------------------------
 
+Answers to Questions:
+1. Based on the f-score, MegaM works well.
+2. As with sentiment analysis, sequence of words/tokens affects the classification.
+e.g "happy", "not happy"
+if we dont consider the sequence or nearby words, the classifier may classify the above examples as same class which is not correct. That's why Naive bayes score is less compared to SVM and MegaM (SVM and MegaM consider the nearby tokens into account during classification)
+
 SPAM/HAM Detection:
 Naive Bayes
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
 SPAM	 0.9792		0.9884		0.9838
@@ -40,7 +43,6 @@ HAM	 0.9883		0.9791		0.9837
 -------------------------------------------------
 
 SVM
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
 SPAM	 0.9135		0.9917		0.9510
@@ -49,7 +51,6 @@ HAM	 0.9909		0.9064		0.9468
 -------------------------------------------------
 
 MegaM
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
 SPAM	 0.9657		0.9855		0.9755
@@ -57,11 +58,16 @@ SPAM	 0.9657		0.9855		0.9755
 HAM	 0.9853		0.9650		0.9750
 -------------------------------------------------
 
+Answers to Questions:
+1. Based on the f-score, Naive Bayes works well.
+2. As with spam detection, sequence of words/tokens does not impact the classification.
+certain words contribute a lot towards classification. That's why Naive bayes score is better compared to SVM and MegaM (Naive Bayes does not consider the surrounding words during classification, works based on the naive assumption of "words are independent of each other")
+3. Compared to SPAM/HAM and sentiment analysis, Spam detection performs better for the same reason
+
 Part II: 25% Train , 75% Development
 
 Sentiment Analysis (POSITIVE/NEGATIVE):
 Naive Bayes
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
 POSITIVE 0.8532		0.8064		0.8293
@@ -78,7 +84,6 @@ NEGATIVE 0.8583		0.8246		0.8411
 -------------------------------------------------
 
 MegaM
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
 POSITIVE 0.8505		0.8627		0.8566
@@ -86,9 +91,14 @@ POSITIVE 0.8505		0.8627		0.8566
 NEGATIVE 0.8621		0.8499		0.8559
 -------------------------------------------------
 
+Answers to Questions:
+How much did performance drop for each of the machine learning techniques? 
+Almost ~2-3% for all the techniques
+Were some machine learning techniques more robust given a smaller training set? 
+Even though the training set is smaller, based on the result all machine learning techinques are robust as ther performance drop is not huge.
+
 SPAM/HAM Detection:
 Naive Bayes
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
 SPAM	 0.9813		0.9816		0.9811
@@ -97,7 +107,6 @@ HAM	 0.9807		0.9809		0.9808
 -------------------------------------------------
 
 SVM
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
 SPAM	 0.9205		0.9882		0.9532
@@ -106,13 +115,19 @@ HAM	 0.9870		0.9132		0.9487
 -------------------------------------------------
 
 MegaM
-
 	 Precision	Recall		F-Score
 -------------------------------------------------
-SPAM	 0.		0.		0.
+SPAM	 0.9657		0.9585		0.9650
 -------------------------------------------------
-HAM	 0.		0.		0.
+HAM	 0.9893		0.9560		0.9680
 -------------------------------------------------
+
+Answers to Questions:
+How much did performance drop for each of the machine learning techniques? 
+Almost ~1% for all the techniques
+Were some machine learning techniques more robust given a smaller training set? 
+Even though the training set is smaller, based on the result all machine learning techinques are robust as ther performance drop not huge.
+Is there a difference between SPAM detection and sentiment analysis? Yes, Spam performs extremely better even though the training data has been reducted a lot.
 
 List of scripts:
 
